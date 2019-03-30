@@ -1,0 +1,83 @@
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+
+%opening
+\title{\normalsize{Personal Data Protection Commission, Singapore}\\\LARGE{Guide to Basic Data Anonymisation Techniques}\\\vspace{0.3cm}\Large{{\textsc{Report Review}}}}
+\author{\textbf{Anshul Aggarwal}\\A0191501R}
+\date{CS4257}
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+The Personal Data Protection Commission of Singapore published a detailed report\footnote{https://www.pdpc.gov.sg/-/media/Files/PDPC/PDF-Files/Other-Guides/Guide-to-Anonymisation\_v1-(250118).pdf}, describing the various technical aspects of anonymisation, and how organizations must deal with data to ensure the privacy of the users is not at risk. It describes in detail the various scenarios and approaches that organizations dealing with sensitive data can take up to safegaurd their customers from any potential privacy breach. The report only deals with \textit{static, structured, well-defined, single-level} datasets, and ways to anonymise data in such datasets. This somewhat limits the scope of the report, as today data is available in a large number of formats, each with their own associated privacy risks, but nonetheless it is one of the most widespread form of data.
+
+
+The report introduces the terminology associated with privacy fairly well, and has defined the scope and target audience comprehensively. Further, it discusses in detail some data anonymisation concepts, such as the purpose and utility of anonymisation, characteristics of anonymisation techniques, inference, audience limitations, and the like. These concepts are well defined. Then, it discusses some data disclosure risks, defining the different ways an adversary can obtain information from a database if it is not sufficiently anonymised.
+
+The report then discusses some data anonymisation techniques in detail. The following section discusses each, along with its strengths and weaknesses.
+
+\section{Data Anonymisation Techniques}
+
+\subsection{Attribute Suppression}
+
+This technique involves removing complete attributes, or columns of data from the database. Such attributes are generally either not required in the anonymised dataset, or when the attribute cannot be sufficiently anonymised using any other technique. Examples include attributes which are direct identifiers, such as names and addresses.
+
+The report states that this is ``the strongest type of anonymisation technique''. This is however dubious, as it has been shown that removing just identifying information does not anonymise the dataset. There are other attributes, called \textit{quasi-identifiers}, or attributes which do not directly leak information, but a combination of a few of those narrows the search down to a very small number of people. Research has shown that \textit{linkage attacks} can be performed on these quasi-identifiers using multiple publicly available datasets to break anonymity.
+
+\subsection{Record Suppression}
+
+This involves removal of entire records from the dataset. This is generally done over outliers that are obtained after using other generalisation techniques over the datasets.
+
+While this technique surely does protect the privacy of the users whose data has been removed (as their data no longer exists in the dataset --- there is no longer a problem to solve for them), this can significantly impact the dataset statistics, affecting the integrity of the dataset as a whole. This has been rightfully highlighted in the report.
+
+\subsection{Character Masking}
+
+This technique involves partially changing the data values by using a constant symbol to hide a sequence of characters (For example, zip code 123456 masked to 12XXXX). 
+
+This is one of the techniques that can be used to achieve \textit{k-anonymity} in a dataset, as it can be a good binning approach for cases where a large number of sequences are masked (for example 123456, 124589, 126643 all masked to 12XXXX). But it has been shown that k-anonymity is not enough for completely anonymising datasets. So while this may be partially effective, it is not a fool-proof technique.
+
+The report further highlights an important distinction point. Scenarios where data is masked in such a way that the person to whom the data belongs can recognise it, is not part of data anonymisation techniques. For example, partially masked credit card numbers can still be uniquely recognized by the owners combined with possibly just one other attribute. The objective of data anonymisation is that even the owners of the data record cannot identify it themselves uniquely.
+
+\subsection{Pseudonymisation}
+
+This technique involves replacing identifying attributes of data with pseudonyms, or made-up values, a map of which with the true values is available only with the original owner of the dataset. This approach allows for referential integrity of datasets, in contrast to attribute suppression.
+
+For a standalone release of a dataset, this is roughly equivalent to attribute suppression, as these attributes no longer contribute any value to the dataset. This is equivalent to dropping the attributes as a whole. There is still a threat of linkage attacks using quasi-identifiers, and as discussed above, such techniques are not very effective at preserving privacy as a whole.
+
+\subsection{Generalisation}
+
+This technique is similar to character masking, albeit for all types of data attributes. It involves deliberately reducing the precision of the data in the record. This may involve processes like converting age into an age range, or reducing the precision of the location.
+
+This technique is one of the operations used for the general k-anonymisation approach, and suffers all the flaws that k-anonymity suffers from. The dataset obtained after applying this approach may not be sufficiently anonymised and can be de-anonymised.
+
+\subsection{Swapping}
+
+This technique involves swapping the values of some between records, to prevent linkage attacks being successful. On the whole, this ensures that the dataset statistics remain consistent when considering the dataset as a whole. However, this technique compromises the integrity of the dataset, as it may now contain completely false data.
+
+\subsection{Data Perturbation}
+
+This technique involves changing the values in the original dataset by adding a small random noise, so that the final values are slightly different. It introduces some degree of ``error'' into the data, making it harder to identify individuals in the dataset. This only works on numerical attributes.
+
+The success or failure of this technique depends heavily on the degree of noise that is added. If the change is too small, it is ineffective, as simple rounding operations will negate the error introduced. If the change is too large, the dataset becomes useless. The correct balance may be hard to find. Further, probabilistic attacks using summary statistics are still possible, as the error will not greatly impact the statistics of the dataset.
+
+\subsection{Synthetic Data}
+
+This is a special case where synthetic data is generated with patterns similar to the original dataset, when the data is to be used for research purposes. This is relatively effective, as the original data is not used and it may be impossible to concretely identify individual users' sensitive attributes. However, local statistics based attacks, to find out the sensitive attributes of a person probabilistically is still possible, as the synthetic dataset mimics the patterns of the original dataset. Further, such datasets may only be useful in very specific scenarios.
+
+\subsection{Data Aggregation}
+
+This technique involves aggregating information, to get a summary of the data in the record instead of the actual values. For example, the entry and exit time of people into a building can be combined into an attribute describing the total time spent in the building.
+
+This approach however works again only in a limited set of scenarios on numerical and temporal data attributes. Further, probabilistic attacks are still possible, as such attacks tend to exploit such summary statistics, and the approach is generating, not masking such attributes.
+
+\section{Conclusion}
+
+The report discusses several approaches to anonymise data in structured datasets. The approaches revolve around the concept of k-anonymity. The report further discusses comprehensively in detail k-anonymity and how is it used over datasets, using the anonymisation techniques discussed above.
+
+However it has been shown in research that k-anonymity provides a very weak privacy guarantee. In fact, the report does not even discuss the improved versions of k-anonymity, i.e. \textit{l-diversity} and \textit{t-closeness}, which provide significantly greater privacy guarantee. However, such techniques are still not good enough, as some researchers have shown. The report fails to discuss in detail concepts such as \textit{differential privacy}, which provide a way better privacy guarantee.
+
+The report further discusses some general safeguards and restrictions on data access that the organizations can put in place to prevent leaks of private information. These are good suggestions, and must be enforced in organizations handling extremely sensitive data, but it is not always possible to enforce such restrictions. In case the dataset has to be released publicly, these safeguards are rendered irrelevant. The report also touches on the aspect of IT governance, and the importance of anonymising data before it is released, and keeping track of the anonymised instances to ensure that different anonymisation approaches over different instances of dataset releases cannot be combined to adversarially obtain sensitive information.
+
+\end{document}
