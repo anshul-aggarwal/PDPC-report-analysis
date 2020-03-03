@@ -1,0 +1,50 @@
+\begin{thebibliography}{1}
+
+\bibitem{termsuppression}
+Tore Dalenius.
+\newblock Finding a needle in a haystack or identifying anonymous census
+  records.
+\newblock {\em Journal of Official Statistics}, 2(3):329--336, 1986.
+
+\bibitem{suppression}
+Latanya Sweeney.
+\newblock Simple demographics often identify people uniquely.
+\newblock {\em Data Privacy Working Paper, Carnegie Mellon University}, 2000.
+
+\bibitem{k-anon}
+Latanya Sweeney.
+\newblock {K-Anonymity: A Model for Protecting Privacy}.
+\newblock {\em Int. J. Uncertain. Fuzziness Knowl.-Based Syst.},
+  10(5):557–570, October 2002.
+
+\bibitem{k-anonprocess}
+Latanya Sweeney.
+\newblock {Achieving K-Anonymity Privacy Protection Using Generalization and
+  Suppression}.
+\newblock {\em Int. J. Uncertain. Fuzziness Knowl.-Based Syst.},
+  10(5):571–588, October 2002.
+
+\bibitem{l-diversity}
+Ashwin Machanavajjhala, Daniel Kifer, Johannes Gehrke, and Muthuramakrishnan
+  Venkitasubramaniam.
+\newblock {L-Diversity: Privacy beyond k-Anonymity}.
+\newblock {\em ACM Trans. Knowl. Discov. Data}, 1(1):3–es, March 2007.
+
+\bibitem{k-anoncod}
+Charu~C. Aggarwal.
+\newblock {On K-Anonymity and the Curse of Dimensionality}.
+\newblock In {\em Proceedings of the 31st International Conference on Very
+  Large Data Bases}, VLDB ’05, page 901–909. VLDB Endowment, 2005.
+
+\bibitem{DifferentialPrivacy}
+Cynthia Dwork and Aaron Roth.
+\newblock {The Algorithmic Foundations of Differential Privacy}.
+\newblock {\em Found. Trends Theor. Comput. Sci.}, 9(3–4):211–407, August
+  2014.
+
+\bibitem{surveyattacks}
+Cynthia Dwork, Adam Smith, Thomas Steinke, and Jonathan Ullman.
+\newblock {Exposed! A Survey of Attacks on Private Data}.
+\newblock {\em Annual Review of Statistics and Its Application (2017)}, 2017.
+
+\end{thebibliography}
